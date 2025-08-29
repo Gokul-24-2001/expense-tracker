@@ -1,0 +1,71 @@
+.body{
+  background-color: rgba(202, 207, 214, 0.393);
+}
+.navbar{
+  background-color:white;
+  position: sticky;
+  top: 2px;
+  
+}
+.logo{
+margin-left:60px;
+}
+.nav1 a{
+  padding: 0px 20px;
+    text-decoration: none;
+   color:#000000;
+ font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+.profile{
+    padding: 0px 15px;
+    text-decoration: none;
+   color:#000000;
+}
+span,img{
+padding: 13px;
+}
+.profile button{
+  border: none;
+  background-color: rgb(225, 45, 45);
+  border-radius:.25rem;
+  padding: 1px 10px;
+}
+.dashboard{
+    height: 600px;
+    /* padding: 70px 0px; */
+    width:250px;
+  background-color:white;
+ 
+}
+.dashboard a{
+   
+ color:black    ;text-decoration: none;
+    /* font-size: 20px; */
+
+   
+}
+.icons {
+  padding-left:15px;
+  padding-top: 10px;
+}
+.home{
+    background-color: aqua;
+    margin-left: 250px;
+    min-height: 100vh;
+    min-width: none;
+}
+.form{
+  background-color: rgb(70, 70, 227);
+  color:aliceblue;
+  margin-left:350px;
+  margin-top: 60px;
+  width: 500px;
+  border-radius: 10px;
+}
+.form-input input{
+    background-color: rgb(238, 238, 239);
+     width: 300px;
+     text-align: center;
+
+}
