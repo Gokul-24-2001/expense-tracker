@@ -56,7 +56,7 @@ const PieChartComponent = () => {
             data={pieData}
             dataKey="value"
             nameKey="name"
-            cx="52%"
+            cx="55%"
             cy="50%"
             outerRadius={100}
             label={({ name, percent }) =>

@@ -70,9 +70,9 @@ const Expense = () => {
         <div className={`dashboard mt-2 ${isFixed ? 'fixed-sidebar' : 'col-md-3'}`}>
           <div className="icons" onClick={handleSidebarItemClick}><span><LuLayoutDashboard /></span> <Link to="/dashboard">Dashboard</Link></div>
           <div className="icons" onClick={handleSidebarItemClick}><span><TbNotes /></span> <a href="/expense">Expense</a></div>
-          <div className="icons" onClick={handleSidebarItemClick}><span><MdOutlineSubscriptions /></span> <a href="#">Subscriptions</a></div>
-          <div className="icons" onClick={handleSidebarItemClick}><span><CgProfile /></span> <a href="#">Profile</a></div>
-          <div className="icons" onClick={handleSidebarItemClick}><span><SlSettings /></span> <a href="#">Settings</a></div>
+          <div className="icons" ><span><MdOutlineSubscriptions /></span> <a href="#">Subscriptions</a></div>
+          <div className="icons" ><span><CgProfile /></span> <a href="#">Profile</a></div>
+          <div className="icons" ><span><SlSettings /></span> <a href="#">Settings</a></div>
         </div>
         {/* main content */}
         <div className={`bg-light mt-2 ${isFixed ? 'main-content-fixed col-md-9' : 'col-md-9'}`}>

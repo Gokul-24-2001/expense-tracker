@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import React from 'react'
 // import {Link} from 'react-router-dom'
-import { useState } from 'react';
 import { SlSettings } from "react-icons/sl";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { TbNotes } from "react-icons/tb";
@@ -35,14 +33,7 @@ function Dashboard({ options }) {
  
   return (
     <div className="container-fluid">
-      <div className="row py-3 gap-5">
-        <div className="col-md-3">
-          <div className="dashboard d-flex flex-column">
-
-            <div className='icons'><span><LuLayoutDashboard /></span><a href="#">Dashboard</a></div>
-            <div className='icons'><span><TbNotes /></span><a href="#">expense</a></div>
-            <div className='icons'><span><MdOutlineSubscriptions /></span><a href="#">Subscriptions</a></div>
-            <div className='icons'><span><CgProfile /></span><a href="#">profile</a></div>
+      <div className="row p-2 gap-4">
 
         {/* Sidebar */}
         <div className={`col-md-3 bg-light dashboard sidebar ${isFixed ? 'fixed-sidebar' : ''}`}>
@@ -52,19 +43,19 @@ function Dashboard({ options }) {
           <div className="icons py-2" onClick={handleSidebarItemClick}>
             <span><TbNotes /></span> <Link to="/expense">Expense</Link>
           </div>
-          <div className="icons py-2" onClick={handleSidebarItemClick}>
+          <div className="icons py-2" >
             <span><MdOutlineSubscriptions /></span> <Link to="#">Subscriptions</Link>
           </div>
-          <div className="icons py-2" onClick={handleSidebarItemClick}>
+          <div className="icons py-2" >
             <span><CgProfile /></span> <Link to="#">Profile</Link>
           </div>
-          <div className="icons py-2" onClick={handleSidebarItemClick}>
+          <div className="icons py-2" >
             <span><SlSettings /></span> <Link to="#">Settings</Link>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className={`col-md-9 ${isFixed ? 'offset-md-3' : ''} bg-secondary pt-3`}>
+        <div className={`col-md-9 bg-secondary pt-3 ${isFixed ? 'offset-md-3' : ''} `}>
 
           <div className="row g-3 px-2">
             {/* Bar Chart */}
@@ -82,7 +73,7 @@ function Dashboard({ options }) {
 
             {/* Pie Chart */}
             <div className="col-md-6">
-              <div className="p-3 bg-light rounded h-100">
+              <div className="p-3 bg-light rounded">
                 <h6>Pie Chart</h6>
                 <PieChartComponent
 
@@ -124,12 +115,10 @@ function Dashboard({ options }) {
           </div>
 
         </div>
-      </div>
     </div>
 
 
         </div>
-      </div>
   )
 }
 

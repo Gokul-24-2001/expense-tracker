@@ -30,7 +30,6 @@ function App() {
 
             <div className="nav1">
               <Link to="/dashboard">Dashboard</Link>
-              <Link to="/expense">Expense</Link>
               <a href="#">Subscriptions</a>
             </div>
 
@@ -46,7 +45,9 @@ function App() {
             </div>
           </nav>
 
-          <Routes>
+         
+        </div>
+         <Routes>
             <Route
               path="/dashboard"
               element={<Dashboard options={options} />}
@@ -54,7 +55,6 @@ function App() {
             <Route path="/expense" element={<Expense />} />
             <Route path="/expense/:id" element={<Expense />} />
           </Routes>
-        </div>
       </BrowserRouter>
     </ExpenseProvider>
   );
