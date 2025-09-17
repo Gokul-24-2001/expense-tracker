@@ -4,13 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { ExpenseProvider } from "./Expense_context";
 import Dashboard from "./Dashboard";
-<<<<<<< HEAD
 import Expense from "./Expense";
 
 
 
 
-=======
+
 // import Home from "./Home";
 // import Add_Expense from "./Add_Expense";
 >>>>>>> 66dde92d5d907eb4978843c3ed9536793d1ef3e9

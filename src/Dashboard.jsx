@@ -1,87 +1,32 @@
-<<<<<<< HEAD
 import React, { useState, useContext } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-=======
-import React from 'react'
-// import {Link} from 'react-router-dom'
-import { useState } from 'react';
->>>>>>> 66dde92d5d907eb4978843c3ed9536793d1ef3e9
+import { Link, useNavigate } from 'react-router-dom';
 import { SlSettings } from "react-icons/sl";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { TbNotes } from "react-icons/tb";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
-<<<<<<< HEAD
+
 import Barchartcomponent from './Barchartcomponent';
 import PieChartComponent from './Piechartcomponent';
 import { ExpenseContext } from './Expense_context';
+
 function Dashboard({ options }) {
   const { expenses, setExpenses } = useContext(ExpenseContext);
-
   const [isFixed, setIsFixed] = useState(false);
   const navigate = useNavigate();
 
   const handleSidebarItemClick = () => {
     setIsFixed(true);
   };
+
   const deleteExpense = (index) => {
-    const Afterdeleteexpenses = expenses.filter((item, i) => i != index);
-    setExpenses(Afterdeleteexpenses);
-  }
+    const afterDelete = expenses.filter((_, i) => i !== index);
+    setExpenses(afterDelete);
+  };
 
   return (
     <div className="container-fluid">
       <div className="row py-3 gap-5">
-=======
-// import BarChart from './Barchart';
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-// const data = {
-//   labels: ["January", "February", "March", "April","may"],
-//   datasets: [
-//     {
-//       label: "Expenses",
-//       data: [500, 800, 650, 700,600],
-//       backgroundColor: "rgba(75,192,192,0.5)",
-//     },
-//   ],
-// };
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: { position: "top" },
-    title: { display: true, text: "Monthly Spending Expenses",align:"start" },
-  },
-};
-
-function Dashboard() {
-  const [expensesData, setExpensesData] = useState({
-    labels: ['January', 'February', 'March', 'April', "may"],
-    values: [500, 800, 650, 700, 200],
-    // spends: [100, 50, 130]
-  });
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-3">
-          <div className="dashboard d-flex flex-column">
-
-            <div className='icons'><span><LuLayoutDashboard /></span><a href="#">Dashboard</a></div>
-            <div className='icons'><span><TbNotes /></span><a href="#">expense</a></div>
-            <div className='icons'><span><MdOutlineSubscriptions /></span><a href="#">Subscriptions</a></div>
-            <div className='icons'><span><CgProfile /></span><a href="#">profile</a></div>
->>>>>>> 66dde92d5d907eb4978843c3ed9536793d1ef3e9
 
         {/* Sidebar */}
         <div className={`col-md-3 bg-light dashboard sidebar ${isFixed ? 'fixed-sidebar' : ''}`}>
@@ -105,7 +50,6 @@ function Dashboard() {
         {/* Main Content */}
         <div className={`col-md-9 ${isFixed ? 'offset-md-3' : ''} bg-secondary pt-3`}>
 
-<<<<<<< HEAD
           <div className="row g-3 px-2">
             {/* Bar Chart */}
             <div className="col-md-6 bg-light py-2 rounded">
@@ -124,16 +68,14 @@ function Dashboard() {
             <div className="col-md-6">
               <div className="p-3 bg-light rounded h-100">
                 <h6>Pie Chart</h6>
-                <PieChartComponent
-
-                />
+                <PieChartComponent />
               </div>
             </div>
           </div>
 
           {/* Table Section */}
           <div className="row mt-3 px-2">
-            <div className="col-6 bg-light rounded p-3">
+            <div className="col-12 bg-light rounded p-3">
               <h6>Recent Expenses</h6>
               <table className="table table-hover mt-2">
                 <thead className="table-secondary">
@@ -141,23 +83,41 @@ function Dashboard() {
                     <th>Category</th>
                     <th>Amount</th>
                     <th>Date</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {
-                    expenses.map((item, index) => {
-                      return (
-                        <tr>
-                          <td>{item.category}</td>
-                          <td>{item.amount}</td>
-                          <td>{item.date}</td>
-                          <td><div className='d-flex gap-2'><button type="button" onClick={() => navigate(`/expense/${index}`)} className='edit'>Edit</button>
-                            <button type="button" className='delete' onClick={() => deleteExpense(index)}>Delete</button></div></td>
-                        </tr>
-                      )
-                    })
-                  }
-
+                  {expenses.length > 0 ? (
+                    expenses.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.category}</td>
+                        <td>{item.amount}</td>
+                        <td>{item.date}</td>
+                        <td>
+                          <div className='d-flex gap-2'>
+                            <button
+                              type="button"
+                              onClick={() => navigate(`/expense/${index}`)}
+                              className='btn btn-sm btn-warning'
+                            >
+                              Edit
+                            </button>
+                            <button
+                              type="button"
+                              className='btn btn-sm btn-danger'
+                              onClick={() => deleteExpense(index)}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="4" className="text-center">No expenses added yet</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
@@ -170,52 +130,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-=======
-            <div className='icons'><span><SlSettings /></span><a href="#">settings</a></div>
-          </div>
-        </div>
-        <div className="col-md-9">
-          {/* <div className='dash-content'>
-            <Bar
-              data={{
-                labels: expensesData.labels,
-                datasets: [{
-                  label: 'Expenses',
-                  data: expensesData.values,
-                  backgroundColor: 'rgba(210, 219, 86, 0.5)',
-                  barPercentage: 0.5,
-                  // barThickness:30,
-
-                }, 
-                // {
-                //   label: 'spend',
-                //   data: expensesData.spends,
-                //   backgroundColor: 'rgba(240, 66, 74, 0.5)',
-                //   barThickness: 20,
-
-                // }
-              ]
-              }}
-              options={options}
-            />
-
-          </div> */}
-          <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export default Dashboard
->>>>>>> 66dde92d5d907eb4978843c3ed9536793d1ef3e9
