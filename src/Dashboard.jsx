@@ -1,32 +1,48 @@
 import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import React from 'react'
+// import {Link} from 'react-router-dom'
+import { useState } from 'react';
 import { SlSettings } from "react-icons/sl";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { TbNotes } from "react-icons/tb";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
-
 import Barchartcomponent from './Barchartcomponent';
 import PieChartComponent from './Piechartcomponent';
 import { ExpenseContext } from './Expense_context';
 
 function Dashboard({ options }) {
   const { expenses, setExpenses } = useContext(ExpenseContext);
+
   const [isFixed, setIsFixed] = useState(false);
   const navigate = useNavigate();
 
   const handleSidebarItemClick = () => {
     setIsFixed(true);
   };
-
   const deleteExpense = (index) => {
-    const afterDelete = expenses.filter((_, i) => i !== index);
-    setExpenses(afterDelete);
-  };
+    const Afterdeleteexpenses = expenses.filter((item, i) => i != index);
+    setExpenses(Afterdeleteexpenses);
+  }
 
+  // return (
+  //   <div className="container-fluid">
+  //     <div className="row py-3 gap-5">
+
+
+
+ 
   return (
     <div className="container-fluid">
       <div className="row py-3 gap-5">
+        <div className="col-md-3">
+          <div className="dashboard d-flex flex-column">
+
+            <div className='icons'><span><LuLayoutDashboard /></span><a href="#">Dashboard</a></div>
+            <div className='icons'><span><TbNotes /></span><a href="#">expense</a></div>
+            <div className='icons'><span><MdOutlineSubscriptions /></span><a href="#">Subscriptions</a></div>
+            <div className='icons'><span><CgProfile /></span><a href="#">profile</a></div>
 
         {/* Sidebar */}
         <div className={`col-md-3 bg-light dashboard sidebar ${isFixed ? 'fixed-sidebar' : ''}`}>
@@ -68,14 +84,16 @@ function Dashboard({ options }) {
             <div className="col-md-6">
               <div className="p-3 bg-light rounded h-100">
                 <h6>Pie Chart</h6>
-                <PieChartComponent />
+                <PieChartComponent
+
+                />
               </div>
             </div>
           </div>
 
           {/* Table Section */}
           <div className="row mt-3 px-2">
-            <div className="col-12 bg-light rounded p-3">
+            <div className="col-6 bg-light rounded p-3">
               <h6>Recent Expenses</h6>
               <table className="table table-hover mt-2">
                 <thead className="table-secondary">
@@ -83,41 +101,23 @@ function Dashboard({ options }) {
                     <th>Category</th>
                     <th>Amount</th>
                     <th>Date</th>
-                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {expenses.length > 0 ? (
-                    expenses.map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.category}</td>
-                        <td>{item.amount}</td>
-                        <td>{item.date}</td>
-                        <td>
-                          <div className='d-flex gap-2'>
-                            <button
-                              type="button"
-                              onClick={() => navigate(`/expense/${index}`)}
-                              className='btn btn-sm btn-warning'
-                            >
-                              Edit
-                            </button>
-                            <button
-                              type="button"
-                              className='btn btn-sm btn-danger'
-                              onClick={() => deleteExpense(index)}
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="4" className="text-center">No expenses added yet</td>
-                    </tr>
-                  )}
+                  {
+                    expenses.map((item, index) => {
+                      return (
+                        <tr>
+                          <td>{item.category}</td>
+                          <td>{item.amount}</td>
+                          <td>{item.date}</td>
+                          <td><div className='d-flex gap-2'><button type="button" onClick={() => navigate(`/expense/${index}`)} className='edit'>Edit</button>
+                            <button type="button" className='delete' onClick={() => deleteExpense(index)}>Delete</button></div></td>
+                        </tr>
+                      )
+                    })
+                  }
+
                 </tbody>
               </table>
             </div>
@@ -126,7 +126,11 @@ function Dashboard({ options }) {
         </div>
       </div>
     </div>
-  );
+
+
+        </div>
+      </div>
+  )
 }
 
-export default Dashboard;
+export default Dashboard
