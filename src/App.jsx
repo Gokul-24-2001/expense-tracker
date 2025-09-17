@@ -4,14 +4,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { ExpenseProvider } from "./Expense_context";
 import Dashboard from "./Dashboard";
+<<<<<<< HEAD
 import Expense from "./Expense";
 
 
 
 
+=======
+// import Home from "./Home";
+// import Add_Expense from "./Add_Expense";
+>>>>>>> 66dde92d5d907eb4978843c3ed9536793d1ef3e9
 
 function App() {
 
+<<<<<<< HEAD
 
 
 
@@ -28,6 +34,11 @@ function App() {
 
   return (<ExpenseProvider>
     <BrowserRouter>
+=======
+  return (
+    <BrowserRouter>
+        <div>
+>>>>>>> 66dde92d5d907eb4978843c3ed9536793d1ef3e9
       <nav className="navbar">
         <div className="logo">
 
@@ -35,6 +46,7 @@ function App() {
 
         </div>
         <div className="nav1">
+<<<<<<< HEAD
 
           <Link to="/dashboard">Dashboard</Link>
           <a href="#">Subscriptions</a>
@@ -56,6 +68,26 @@ function App() {
 
     </BrowserRouter>
   </ExpenseProvider>
+=======
+          
+            <a href="/dashboard">Dashboard</a>
+            <a href="#">Subscriptions</a>
+       </div>
+                 <div className="profile">
+           <span>Profile</span>
+            <button type="button">Logout</button>
+            <img src="https://i0.wp.com/studiolorier.com/wp-content/uploads/2018/10/Profile-Round-Sander-Lorier.jpg?ssl=1" width="55px" height="55px"/>
+          </div>
+      
+      </nav>
+<Routes>
+  <Route path="/dashboard" element={<Dashboard/>}></Route>
+</Routes>
+  {/* <Dashboard/> */}
+    </div>
+
+</BrowserRouter>
+>>>>>>> 66dde92d5d907eb4978843c3ed9536793d1ef3e9
   );
 }
 
