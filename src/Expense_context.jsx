@@ -7,7 +7,6 @@ const initialValues = {
   category: "",
   amount: "",
   date: "",
-
 };
 
 export const ExpenseProvider = ({ children }) => {
@@ -22,8 +21,8 @@ export const ExpenseProvider = ({ children }) => {
     localStorage.setItem('expenses', JSON.stringify(expenses));
   }, [expenses]);
 
-  const addExpense = () => {
-    setExpenses((prev) => [...prev, { ...formValues, amount: Number(formValues.amount) }]);
+  const addExpense = (expense) => {
+    setExpenses((prev) => [...prev, { ...expense, amount:Number(expense.amount) }]);
     setFormValues(initialValues);
   };
   // Update existing expense
@@ -32,6 +31,8 @@ export const ExpenseProvider = ({ children }) => {
       prev.map((item, i) => (i === index ? updatedExpense : item))
     );
   };
+
+
   console.log(expenses)
   return (
     <ExpenseContext.Provider value={{
@@ -39,7 +40,8 @@ export const ExpenseProvider = ({ children }) => {
       setExpenses,
       formValues,
       setFormValues,
-      addExpense, updateExpense
+      addExpense, updateExpense,initialValues,
+      
     }}>
       {children}
     </ExpenseContext.Provider>

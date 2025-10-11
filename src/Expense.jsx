@@ -1,30 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { SlSettings } from "react-icons/sl";
-import { LuLayoutDashboard } from "react-icons/lu";
-import { TbNotes } from "react-icons/tb";
-import { MdOutlineSubscriptions } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
-import expense_data from './Expense_data.json';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import { ExpenseContext } from './Expense_context';
+import Sidebar from './Sidebar';
+import Navbar from './Navbar';
 
-// const initialvalues={
-//   category:"",
-//   amount:"",
-//   date:""
-// }
+
 const Expense = () => {
-  const [isFixed, setIsFixed] = useState(false);
-  // const[formValues,setFormValues]=useState(initialvalues);
-  // const [expenses,setExpenses]=useState(()=>{
-  //   const saved=localStorage.getItem('expenses');
-  //   return saved?JSON.parse(saved):[]
-  // });
   const {
     expenses,
     formValues,
     setFormValues,
-    addExpense, updateExpense,
+    addExpense, updateExpense, initialValues,
   } = useContext(ExpenseContext);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -32,22 +18,17 @@ const Expense = () => {
 
   const [updateval, setUpdateval] = useState(editing || {});
 
-  console.log(editing)
-  //  Fix sidebar when any item is clicked
-  const handleSidebarItemClick = () => {
-    setIsFixed(true);
-  };
+  // console.log(editing)
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (editing) {
       setUpdateval({ ...updateval, [name]: value })
-
     }
     else {
       setFormValues({
         ...formValues, [name]: value,
-      })
-
+      });
     }
   }
   const handleSubmit = () => {
@@ -56,26 +37,29 @@ const Expense = () => {
       navigate("/dashboard")
     }
     else {
-      addExpense();
+      addExpense(formValues);
+      // setFormValues(initialValues);
     }
   }
+  const Cancelation = () => {
+    if (editing) {
+      setUpdateval(initialValues)
+    }
+    else {
+      setFormValues(initialValues);
 
+    }
+  }
+  console.log(formValues)
   return (
 
-    <div className="container m-0">
-    
-      
-      <div className="row d-flex gap-4">
+    <div className="container-fluid">
+<Navbar/>
+      <div className="content">
 
-        <div className={`dashboard mt-2 ${isFixed ? 'fixed-sidebar' : 'col-md-3'}`}>
-          <div className="icons" onClick={handleSidebarItemClick}><span><LuLayoutDashboard /></span> <Link to="/dashboard">Dashboard</Link></div>
-          <div className="icons" onClick={handleSidebarItemClick}><span><TbNotes /></span> <a href="/expense">Expense</a></div>
-          <div className="icons" ><span><MdOutlineSubscriptions /></span> <a href="#">Subscriptions</a></div>
-          <div className="icons" ><span><CgProfile /></span> <a href="#">Profile</a></div>
-          <div className="icons" ><span><SlSettings /></span> <a href="#">Settings</a></div>
-        </div>
+<Sidebar/>
         {/* main content */}
-        <div className={`bg-light mt-2 ${isFixed ? 'main-content-fixed col-md-9' : 'col-md-9'}`}>
+        <div className="mx-5">
           <div className='expense'>
             <h4><strong >Add/Edit Expense</strong></h4>
             <p>Please add your expense details</p>
@@ -85,7 +69,7 @@ const Expense = () => {
 
                 <div>
                   <p>category</p>
-                  <select name="category" value={updateval ? updateval.category : formValues.category} onChange={handleChange} id="category">
+                  <select name="category" value={editing ? updateval.category : formValues.category} onChange={handleChange} id="category">
                     <option value="">Select category</option>
                     <option value="Food">Food</option>
                     <option value="cooldrinks">cooldrinks</option>
@@ -96,13 +80,13 @@ const Expense = () => {
                 </div>
                 <div id="amount">
                   <p>Amount</p>
-                  <input value={updateval ? updateval.amount : formValues.amount} name="amount" onChange={handleChange} label="amount" />
+                  <input value={editing ? updateval.amount : formValues.amount} name="amount" onChange={handleChange} label="amount" />
 
                 </div>
                 <div id="date">
                   <p>Date</p>
 
-                  <input type="date" value={updateval ? updateval.date : formValues.date} name="date" onChange={handleChange} label="date" />
+                  <input type="date" value={editing ? updateval.date : formValues.date} name="date" onChange={handleChange} label="date" />
                 </div>
                 <div className='optional'>
                   <p>New(optional)</p>
@@ -111,8 +95,8 @@ const Expense = () => {
 
               </form>
               <div className='button'>
-                <div><button type="button">cancel</button></div>
-                <div><button type="button" onClick={handleSubmit}>save expense</button></div>
+                <div><button className='btn1' type="button" onClick={Cancelation}>cancel</button></div>
+                <div><button className='btn2' type="button" onClick={handleSubmit}>save expense</button></div>
               </div>
             </div>
           </div>

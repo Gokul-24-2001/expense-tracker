@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-// import {Link} from 'react-router-dom'
+import { NavLink,useNavigate } from 'react-router-dom';
 import { SlSettings } from "react-icons/sl";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { TbNotes } from "react-icons/tb";
@@ -9,6 +8,8 @@ import { CgProfile } from "react-icons/cg";
 import Barchartcomponent from './Barchartcomponent';
 import PieChartComponent from './Piechartcomponent';
 import { ExpenseContext } from './Expense_context';
+import Sidebar from './Sidebar';
+import Navbar from'./Navbar';
 
 function Dashboard({ options }) {
   const { expenses, setExpenses } = useContext(ExpenseContext);
@@ -24,38 +25,29 @@ function Dashboard({ options }) {
     setExpenses(Afterdeleteexpenses);
   }
 
-  // return (
-  //   <div className="container-fluid">
-  //     <div className="row py-3 gap-5">
+const activelink=({isActive})=>{
+  return{
+        color:isActive?"red":"black",
+backgroundColor: isActive?"yellow":""
+
+  }
+
+  
+
+}
 
 
 
- 
   return (
     <div className="container-fluid">
-      <div className="row p-2 gap-4">
+      <Navbar/>
+      <div className="content">
 
-        {/* Sidebar */}
-        <div className={`col-md-3 bg-light dashboard sidebar ${isFixed ? 'fixed-sidebar' : ''}`}>
-          <div className="icons py-2" onClick={handleSidebarItemClick}>
-            <span><LuLayoutDashboard /></span> <Link to="/dashboard">Dashboard</Link>
-          </div>
-          <div className="icons py-2" onClick={handleSidebarItemClick}>
-            <span><TbNotes /></span> <Link to="/expense">Expense</Link>
-          </div>
-          <div className="icons py-2" >
-            <span><MdOutlineSubscriptions /></span> <Link to="#">Subscriptions</Link>
-          </div>
-          <div className="icons py-2" >
-            <span><CgProfile /></span> <Link to="#">Profile</Link>
-          </div>
-          <div className="icons py-2" >
-            <span><SlSettings /></span> <Link to="#">Settings</Link>
-          </div>
-        </div>
+       <Sidebar/>
+       
 
         {/* Main Content */}
-        <div className={`col-md-9 bg-secondary pt-3 ${isFixed ? 'offset-md-3' : ''} `}>
+        <div className={`col-12 bg-secondary`}>
 
           <div className="row g-3 px-2">
             {/* Bar Chart */}
@@ -92,6 +84,7 @@ function Dashboard({ options }) {
                     <th>Category</th>
                     <th>Amount</th>
                     <th>Date</th>
+                    <th>Edit/Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -115,10 +108,10 @@ function Dashboard({ options }) {
           </div>
 
         </div>
+      </div>
+
+
     </div>
-
-
-        </div>
   )
 }
 
