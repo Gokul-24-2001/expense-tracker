@@ -84,7 +84,10 @@ backgroundColor: isActive?"yellow":""
                     <th>Category</th>
                     <th>Amount</th>
                     <th>Date</th>
+                    <th>Meals</th>
+                      <th>Description</th>
                     <th>Edit/Delete</th>
+                
                   </tr>
                 </thead>
                 <tbody>
@@ -95,6 +98,8 @@ backgroundColor: isActive?"yellow":""
                           <td>{item.category}</td>
                           <td>{item.amount}</td>
                           <td>{item.date}</td>
+                          <td>{item.meals}</td>
+                          
                           <td><div className='d-flex gap-2'><button type="button" onClick={() => navigate(`/expense/${index}`)} className='edit'>Edit</button>
                             <button type="button" className='delete' onClick={() => deleteExpense(index)}>Delete</button></div></td>
                         </tr>

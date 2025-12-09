@@ -7,6 +7,7 @@ const initialValues = {
   category: "",
   amount: "",
   date: "",
+  meals:"",
 };
 
 export const ExpenseProvider = ({ children }) => {

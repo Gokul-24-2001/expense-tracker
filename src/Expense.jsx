@@ -54,10 +54,10 @@ const Expense = () => {
   return (
 
     <div className="container-fluid">
-<Navbar/>
+      <Navbar />
       <div className="content">
 
-<Sidebar/>
+        <Sidebar />
         {/* main content */}
         <div className="mx-5">
           <div className='expense'>
@@ -66,30 +66,35 @@ const Expense = () => {
 
             <div>
               <form className='form'>
+                <div style={{ display: "flex", marginLeft: "20px", gap: "30px" }}>
+                  <div id="category">
+                    <label style={{ display: "block" }} >category</label>
+                    <select name="category" value={editing ? updateval.category : formValues.category} onChange={handleChange}>
+                      <option id='val' value="">Select category</option>
+                      <option value="Food">Food</option>
+                      <option value="cooldrinks">cooldrinks</option>
+                      <option value="tea" >tea</option>
+                      <option value="Rent">Rent</option>
+                      <option value="Travel">Travel</option>
+                    </select>
+                  </div>
+                  <div id="amount">
+                    <label style={{ display: "block" }}>Amount</label>
+                    <input type="number" value={editing ? updateval.amount : formValues.amount} name="amount" onChange={handleChange} label="amount" />
 
-                <div>
-                  <p>category</p>
-                  <select name="category" value={editing ? updateval.category : formValues.category} onChange={handleChange} id="category">
-                    <option value="">Select category</option>
-                    <option value="Food">Food</option>
-                    <option value="cooldrinks">cooldrinks</option>
-                    <option value="tea" >tea</option>
-                    <option value="Rent">Rent</option>
-                    <option value="Travel">Travel</option>
-                  </select>
-                </div>
-                <div id="amount">
-                  <p>Amount</p>
-                  <input value={editing ? updateval.amount : formValues.amount} name="amount" onChange={handleChange} label="amount" />
-
+                  </div>
                 </div>
                 <div id="date">
-                  <p>Date</p>
+                  <label style={{ display: "block", marginLeft: "20px" }}>Date</label>
 
                   <input type="date" value={editing ? updateval.date : formValues.date} name="date" onChange={handleChange} label="date" />
                 </div>
-                <div className='optional'>
-                  <p>New(optional)</p>
+                <div style={{ marginLeft: "20px" }}>
+                  <label style={{ display: "block" }}  id="meals">Meals</label>
+                  <input type="text" className="meals" value={editing ? updateval.meals : formValues.meals} name="meals" label="meals" onChange={handleChange} />
+                </div>
+                <div className='optional' style={{marginLeft:"20px"}}>
+                  <label style={{ display: "block" }}>New(optional)</label>
                   <textarea placeholder='write any further details if you required'></textarea>
                 </div>
 
