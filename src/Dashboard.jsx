@@ -85,7 +85,7 @@ backgroundColor: isActive?"yellow":""
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Meals</th>
-                      <th>Description</th>
+                      {/* <th>Description</th> */}
                     <th>Edit/Delete</th>
                 
                   </tr>

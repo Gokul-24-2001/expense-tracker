@@ -24,11 +24,7 @@ function App() {
     <ExpenseProvider>
       <BrowserRouter>
 
-         <div className="app-container">
-          {/* <Navbar/>
-          <Sidebar/> */}
-
-         
+         <div className="app-container">         
        
         <div>
          <Routes>
