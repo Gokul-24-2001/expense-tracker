@@ -154,7 +154,7 @@ position: relative;
  content: "⌄"; 
   font-size: 15px;
   font-weight: 900;
-padding-right: 50px;
+padding-left: 520px;
 
   color: #000000;
   position:absolute;
@@ -213,6 +213,7 @@ margin-top: 5px;
   border-radius: .32rem;
   outline: none;
 border:none;
+display: block;
   padding-left: 30px;
   margin-top: 5px;
 

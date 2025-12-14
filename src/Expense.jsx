@@ -1,123 +1,136 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ExpenseContext } from './Expense_context';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
-import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+// Validation schema
 const schema = yup.object({
   category: yup.string().required("Please choose a category"),
-  amount: yup.number().integer().typeError("Amount must be a number").positive("Please enter grater than 0").required("Amount is required"),
-  date: yup.date().typeError("Invalid Date").max(new Date(), "Future date is not allowed").required("Date is required"),
+  amount: yup.number().integer().typeError("Amount must be a number").positive("Please enter greater than 0").required("Amount is required"),
+  date: yup.string().required("Date is required"), // string type ensures no timezone issues
   meals: yup.string().required("Meal is required"),
-})
+  description: yup.string().notRequired(),
+});
+
 const Expense = () => {
-  const {
-    expenses,
-    formValues,
-    setFormValues,
-    addExpense, updateExpense, initialValues,
-  } = useContext(ExpenseContext);
+  const { expenses, addExpense, updateExpense, initialValues } = useContext(ExpenseContext);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  // Find expense to edit
   const editing = expenses.find((item, index) => index === parseInt(id));
-console.log(editing)
-  const [updateval, setUpdateval] = useState(editing || {});
-  const { register, handleSubmit, formState: { errors } ,reset} = useForm({
+
+  // React Hook Form
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: initialValues,
   });
-useEffect
 
+  // Pre-fill form for editing
+  useEffect(() => {
+    if (!editing) return;
 
-  const handleFormdata = () => {
+    // Ensure date is always YYYY-MM-DD string
+    let formattedDate = editing.date;
+
+    // In case some old data has Date objects
+    if (editing.date instanceof Date) {
+      formattedDate = editing.date.toISOString().split("T")[0];
+    } else if (typeof editing.date === "string" && editing.date.includes("T")) {
+      formattedDate = editing.date.split("T")[0];
+    }
+
+    reset({
+      ...editing,
+      date: formattedDate,
+    });
+  }, [editing, reset]);
+
+  // Handle form submit
+  const handleFormdata = (data) => {
+    // Save date as YYYY-MM-DD string only → timezone-proof
+    const expenseData = {
+      ...data,
+      date: data.date,
+    };
+
     if (editing) {
-      updateExpense(parseInt(id), updateval);
-      navigate("/dashboard")
+      updateExpense(parseInt(id), expenseData);
+    } else {
+      addExpense(expenseData);
     }
-    else {
-      addExpense(formValues);
-      // console.log(expenses);
-      // setFormValues(initialValues);
-    }
-  }
+
+    navigate("/dashboard");
+  };
+
+  // Cancel button
   const Cancelation = () => {
-    if (editing) {
-      setUpdateval(initialValues)
-    }
-    else {
-      setFormValues(initialValues);
+    reset(initialValues);
+    navigate("/dashboard");
+  };
 
-    }
-  }
-  // console.log(formValues)
   return (
-
     <div className="container-fluid">
       <Navbar />
       <div className="content">
-
         <Sidebar />
-        {/* main content */}
         <div className="mx-5">
-          <div className='expense'>
-            <h4><strong >Add/Edit Expense</strong></h4>
+          <div className="expense">
+            <h4><strong>Add/Edit Expense</strong></h4>
             <p>Please add your expense details</p>
-
-            <div>
-              <form className='form' onSubmit={handleSubmit(handleFormdata)}>
-                <div style={{ display: "flex", marginLeft: "20px", gap: "30px" }}>
-                  <div id="category">
-                    <label style={{ display: "block" }} htmlFor="categories" >category</label>
-                    <select name="category" id="categories" {...register("category")}>
-                      <option value="">Select category</option>
-                      <option value="Food">Food</option>
-                      <option value="cooldrinks">cooldrinks</option>
-                      <option value="tea" >tea</option>
-                      <option value="Rent">Rent</option>
-                      <option value="Travel">Travel</option>
-                    </select>
-               <p style={{ color: "red" }}> {errors.category?.message}</p>
-                  </div>
-
-                  <div id="amount">
-                    <label style={{ display: "block" }} htmlFor="amt">Amount</label>
-                    <input type="number" id="amt"{...register("amount")}  name="amount" label="amount" />
-                    {errors.amount?.message}
-                  </div>
-
+            <form className="form" onSubmit={handleSubmit(handleFormdata)}>
+              <div style={{ display: "flex", marginLeft: "20px", gap: "30px" }}>
+                <div id="category">
+                  <label htmlFor="categories">Category</label>
+                  <select id="categories" {...register("category")}>
+                    <option value="">Select category</option>
+                    <option value="Food">Food</option>
+                    <option value="cooldrinks">Cool Drinks</option>
+                    <option value="tea">Tea</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Travel">Travel</option>
+                  </select>
+                  <p style={{ color: "red" }}>{errors.category?.message}</p>
                 </div>
-                <div id="date">
-                  <label style={{ display: "block", marginLeft: "20px" }} htmlFor="Date">Date</label>
 
-                  <input type="date" id="Date"{...register("date")}  name="date"  label="date" />
-                  <p> {errors.date?.message} </p>
+                <div id="amount">
+                  <label htmlFor="amt">Amount</label>
+                  <input type="number" id="amt" {...register("amount")} />
+                  <p style={{ color: "red" }}>{errors.amount?.message}</p>
                 </div>
-                <div style={{ marginLeft: "20px" }}>
-                  <label style={{ display: "block" }} id="meals" htmlFor="meal">Meals</label>
-                  <input type="text" {...register("meals")} className="meals" id="meal"name="meals" label="meals"  />
-                  <p> {errors.meals?.message}</p>
-                </div>
-                <div className='optional' style={{ marginLeft: "20px" }}>
-                  <label style={{ display: "block" }} htmlFor="description">New(optional)</label>
-                  <textarea id="description" placeholder='write any further details if you required'></textarea>
-                </div>
-                <div className='button'>
-                  <div><button className='btn1' type="button" onClick={Cancelation}>cancel</button></div>
-                  <div><button className='btn2' type="submit" onClick={handleFormdata}>save expense</button></div>
-                </div>
-              </form>
+              </div>
 
-            </div>
+ <div id="date" style={{ marginLeft: "20px" }}>
+                <label htmlFor="Date">Date</label>
+                <input type="date" id="Date" {...register("date")} />
+                <p style={{ color: "red" }}>{errors.date?.message}</p>
+              </div>
+
+              <div style={{ marginLeft: "20px" }}>
+                <label htmlFor="meal">Meals</label>
+                <input type="text" id="meal" {...register("meals")} />
+                <p style={{ color: "red" }}>{errors.meals?.message}</p>
+              </div>
+
+              <div className="optional" style={{ marginLeft: "20px" }}>
+                <label htmlFor="description">Description (optional)</label>
+                <textarea id="description" placeholder="Write any further details if required" {...register("description")} />
+              </div>
+              <div className="button" style={{ marginLeft: "20px" }}>
+                <button className="btn1" type="button" onClick={Cancelation}>Cancel</button>
+                <button className="btn2" type="submit">Save Expense</button>
+              </div>
+
+            </form>
           </div>
-
         </div>
-
       </div>
-      <div>
-      </div>
-
     </div>
-  )
-}
+  );
+};
+
 export default Expense;
